@@ -33,12 +33,14 @@ jobs:
       run: mvn -B package --file pom.xml
       
     - name: Build and push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v4
+    - uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: ara3601/demo-app
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+       image: ara3601/demo-app
+       tags: v1, latest
+       registry: registry-url.io
+       dockerfile: Dockerfile.ci
+       username: ${{ secrets.DOCKER_USERNAME }}
+       password: ${{ secrets.DOCKER_PASSWORD }}
 
 
   
