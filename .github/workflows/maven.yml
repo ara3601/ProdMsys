@@ -38,8 +38,11 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
          image: ara3601/demo-app
+         tags: latest
+         repository: ara3601/demo-app
+         dockerfile: Dockerfile
          username: ${{ secrets.DOCKER_USERNAME }}
          password: ${{ secrets.DOCKER_PASSWORD }}
-         repository: ara3601/demo-app
+         
  
   
