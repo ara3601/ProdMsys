@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: octopus-underwater-app
-          image: 720766170633.dkr.ecr.us-east-2.amazonaws.com/octopus-underwater-app:latest
+          image: 563777167083.dkr.ecr.ap-south-1.amazonaws.com/springdemo-app:latest
           ports:
             - containerPort: 80
               protocol: TCP
