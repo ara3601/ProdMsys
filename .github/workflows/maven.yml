@@ -50,6 +50,8 @@ jobs:
         ECR_REPOSITORY: springdemo-app
         IMAGE_TAG: springDemo-${{ github.sha }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+       docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+       docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:springDemo-latest
+       docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+       docker push $ECR_REGISTRY/$ECR_REPOSITORY:springDemo-latest
          
