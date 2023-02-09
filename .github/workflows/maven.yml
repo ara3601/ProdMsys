@@ -1,3 +1,4 @@
+
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
 
@@ -32,36 +33,23 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       
-    - name: Set up AWS CLI
-      uses: aws-actions/setup-aws-cli@v1
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-south-1
 
-    - name: Build Docker Image
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: springdemo-app:latest 563777167083.dkr.ecr.ap-south-1.amazonaws.com/springdemo-app:latest
-
-
-
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: aws-actions/aws-login@v1
-      with:
-        registry: ${{ steps.login-ecr.outputs.registry }}
+      uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Push Docker Image
-      uses: docker/push-action@v1
-      with:
-        context: ${{ env.IMAGE_NAME }}
-        tags: ${{ env.AWS_REGION }}.dkr.ecr.aws/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+    - name: Build, Tag, and Push the Image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: springdemo-app
-        DOCKER_TAG: latest
+        IMAGE_TAG: springDemo-${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
          
- 
-  
