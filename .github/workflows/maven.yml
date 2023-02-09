@@ -50,7 +50,7 @@ jobs:
         IMAGE_TAG: demo:latest
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker tag springdemo-app:latest 563777167083.dkr.ecr.ap-south-1.amazonaws.com/springdemo-app:latest
+
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
          
  
